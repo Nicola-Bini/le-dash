@@ -30,11 +30,17 @@ with main:
         daily_change_reference = 'MonthlyChange'
 
     metrics_row1 = st.columns(5)
-    metrics = [{'label': 'Likes', 'value': round(df['totalNumberOfLikes'].iloc[-1]), 'delta': round(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) if 'totalNumberOfLikes' + daily_change_reference in df.columns else np.NaN},
-               {'label': 'Resources', 'value': round(df['totalNumberOfResources'].iloc[-1]), 'delta': round(df['totalNumberOfResources' + daily_change_reference].iloc[-1]) if 'totalNumberOfResources' + daily_change_reference in df.columns else np.NaN},
-               {'label': 'Categories', 'value': round(df['totalNumberOfCategories'].iloc[-1]), 'delta': round(df['totalNumberOfCategories' + daily_change_reference].iloc[-1]) if 'totalNumberOfCategories' + daily_change_reference in df.columns else np.NaN},
-               {'label': 'Users', 'value': round(df['totalNumberOfRegisteredUsers'].iloc[-1]), 'delta': round(df['totalNumberOfRegisteredUsers' + daily_change_reference].iloc[-1]) if 'totalNumberOfRegisteredUsers' + daily_change_reference in df.columns else np.NaN},
-               {'label': 'Libraries', 'value': round(df['totalNumberOfLibraries'].iloc[-1]), 'delta': round(df['totalNumberOfLibraries' + daily_change_reference].iloc[-1]) if 'totalNumberOfLibraries' + daily_change_reference in df.columns else np.NaN}]
+    print(df['totalNumberOfLikes'])
+    print(daily_change_reference)
+    print(round(df['totalNumberOfLikes'].iloc[-1]))
+    print(df['totalNumberOfLikes' + daily_change_reference].iloc[-1])
+    print(pd.isna(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]))
+    print(round(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) if 'totalNumberOfLikes' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) else np.NaN)
+    metrics = [{'label': 'Likes', 'value': round(df['totalNumberOfLikes'].iloc[-1]), 'delta': round(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) if 'totalNumberOfLikes' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) else np.NaN},
+               {'label': 'Resources', 'value': round(df['totalNumberOfResources'].iloc[-1]), 'delta': round(df['totalNumberOfResources' + daily_change_reference].iloc[-1]) if 'totalNumberOfResources' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfResources' + daily_change_reference].iloc[-1]) else np.NaN},
+               {'label': 'Categories', 'value': round(df['totalNumberOfCategories'].iloc[-1]), 'delta': round(df['totalNumberOfCategories' + daily_change_reference].iloc[-1]) if 'totalNumberOfCategories' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfCategories' + daily_change_reference].iloc[-1]) else np.NaN},
+               {'label': 'Users', 'value': round(df['totalNumberOfRegisteredUsers'].iloc[-1]), 'delta': round(df['totalNumberOfRegisteredUsers' + daily_change_reference].iloc[-1]) if 'totalNumberOfRegisteredUsers' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfRegisteredUsers' + daily_change_reference].iloc[-1]) else np.NaN},
+               {'label': 'Libraries', 'value': round(df['totalNumberOfLibraries'].iloc[-1]), 'delta': round(df['totalNumberOfLibraries' + daily_change_reference].iloc[-1]) if 'totalNumberOfLibraries' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfLibraries' + daily_change_reference].iloc[-1]) else np.NaN}]
 
     for i, metric in enumerate(metrics):
         metrics_row1[i].metric(metric['label'], metric['value'], delta=metric['delta'], delta_color="normal", help=None, label_visibility="visible")
