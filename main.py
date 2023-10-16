@@ -30,12 +30,6 @@ with main:
         daily_change_reference = 'MonthlyChange'
 
     metrics_row1 = st.columns(5)
-    print(df['totalNumberOfLikes'])
-    print(daily_change_reference)
-    print(round(df['totalNumberOfLikes'].iloc[-1]))
-    print(df['totalNumberOfLikes' + daily_change_reference].iloc[-1])
-    print(pd.isna(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]))
-    print(round(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) if 'totalNumberOfLikes' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) else np.NaN)
     metrics = [{'label': 'Likes', 'value': round(df['totalNumberOfLikes'].iloc[-1]), 'delta': round(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) if 'totalNumberOfLikes' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfLikes' + daily_change_reference].iloc[-1]) else 0},
                {'label': 'Resources', 'value': round(df['totalNumberOfResources'].iloc[-1]), 'delta': round(df['totalNumberOfResources' + daily_change_reference].iloc[-1]) if 'totalNumberOfResources' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfResources' + daily_change_reference].iloc[-1]) else 0},
                {'label': 'Categories', 'value': round(df['totalNumberOfCategories'].iloc[-1]), 'delta': round(df['totalNumberOfCategories' + daily_change_reference].iloc[-1]) if 'totalNumberOfCategories' + daily_change_reference in df.columns and not pd.isna(df['totalNumberOfCategories' + daily_change_reference].iloc[-1]) else 0},
@@ -44,8 +38,6 @@ with main:
 
     for i, metric in enumerate(metrics):
         metrics_row1[i].metric(metric['label'], metric['value'], delta=metric['delta'], delta_color="normal", help=None, label_visibility="visible")
-    
-
 
 with likes:
     st.line_chart(df, x='date2',  y='totalNumberOfLikes')
